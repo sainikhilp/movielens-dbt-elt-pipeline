@@ -1,0 +1,33 @@
+[0m20:30:07.995486 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A68E4A7500>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A68E6A3B60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A68CE43470>]}
+
+
+============================== 20:30:08.139876 | ab680d8a-5832-4b2b-9816-6cf473795f4b ==============================
+[0m20:30:08.139876 [info ] [MainThread]: Running with dbt=1.11.6
+[0m20:30:08.139876 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\csain\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt init movielens_dbt', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m20:30:08.467019 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\csain\.dbt
+[0m20:30:08.471842 [debug] [MainThread]: Starter project path: C:\MovieLensDBT\.venv\Lib\site-packages\dbt\include\starter_project
+[0m20:30:08.513640 [info ] [MainThread]: 
+Your new dbt project "movielens_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m20:30:08.514633 [info ] [MainThread]: Setting up your profile.
+[0m20:30:47.664385 [debug] [MainThread]: Spark adapter: Setting pyhive.hive logging to ERROR
+[0m20:30:47.664385 [debug] [MainThread]: Spark adapter: Setting thrift.transport logging to ERROR
+[0m20:30:47.664385 [debug] [MainThread]: Spark adapter: Setting thrift.protocol logging to ERROR
+[0m20:38:05.230446 [info ] [MainThread]: Profile movielens_dbt written to C:\Users\csain\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m20:38:05.284011 [debug] [MainThread]: Command `dbt init` succeeded at 20:38:05.284011 after 477.50 seconds
+[0m20:38:05.306767 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A68F993FE0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A6ACC14080>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002A6ACFC45C0>]}
+[0m20:38:05.311768 [debug] [MainThread]: Flushing usage events
+[0m20:38:06.031019 [debug] [MainThread]: An error was encountered while trying to flush usage events
