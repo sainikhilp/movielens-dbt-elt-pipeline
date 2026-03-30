@@ -152,4 +152,14 @@ Thin, renaming-only wrappers over raw Databricks source tables — no business l
 - **Tag relevance analysis** — top 20 most relevant genome tags across all movies
 
 
+## Key Features:
+- Layered architecture — staging → dimensions & facts → business marts
+- Comprehensive data quality testing — not_null and relationship validations across all key columns
+- SCD Type 2 snapshots — tracks historical changes to user tags using dbt_utils surrogate keys
+- Seed-based enrichment — loads movie release dates to enrich rating facts
+- Interactive documentation — auto-generated dbt docs with DAG lineage graphs
+- 20M+ ratings across 27K movies from 138K users — real-world scale analytics data
+- Production-grade SQL patterns — optimized queries and reproducible transformations
+
+
 
