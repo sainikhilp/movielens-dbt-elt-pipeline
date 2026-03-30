@@ -1,29 +1,7 @@
 # MovieLens DBT ELT Pipeline
 
-![dbt](https://img.shields.io/badge/dbt-1.x-orange?logo=dbt)
-![Databricks](https://img.shields.io/badge/platform-Databricks-red?logo=databricks)
-![Python](https://img.shields.io/badge/python-%3E%3D3.12-blue?logo=python)
-![License](https://img.shields.io/badge/license-MIT-green)
-
 A production-style ELT pipeline built with **dbt** on **Databricks**, transforming the [MovieLens ml-20m](https://grouplens.org/datasets/movielens/) dataset into a clean, analytics-ready dimensional model.
 
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Dataset](#dataset)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Data Architecture](#data-architecture)
-- [Models](#models)
-- [Analyses](#analyses)
-- [Getting Started](#getting-started)
-- [Running the Pipeline](#running-the-pipeline)
-- [Generating Documentation](#generating-documentation)
-- [Testing](#testing)
-
----
 
 ## Overview
 
@@ -36,7 +14,7 @@ Key design principles:
 - **Snapshot tracking**: SCD Type 2 snapshot on user tags via `dbt-utils` surrogate keys
 - **Seed enrichment**: movie release dates loaded via a seed file
 
----
+
 
 ## Dataset
 
@@ -51,21 +29,9 @@ Key design principles:
 | `genome-tags.csv` | 1,128 genome tag labels |
 | `links.csv` | IMDB / TMDB cross-reference IDs |
 
-> Data spans January 1995 – March 2015. Users are anonymised; no demographic data is included.
 
----
 
-## Tech Stack
 
-| Tool | Purpose |
-|---|---|
-| [dbt](https://www.getdbt.com/) | Transformation framework |
-| [dbt-databricks](https://github.com/databricks/dbt-databricks) | Databricks adapter |
-| [dbt_utils](https://github.com/dbt-labs/dbt-utils) | Surrogate keys & helper macros |
-| Databricks | Cloud data platform / SQL warehouse |
-| Python ≥ 3.12 | Runtime environment |
-
----
 
 ## Project Structure
 
@@ -91,11 +57,20 @@ MovieLensDBT/
 └── pyproject.toml
 ```
 
----
+## Lineage Graph
+<br>
+<br>
+<img src="figures/lineage_graph.jpg" alt="Lineage Graph" width="800">
+<br>
+<br>
+
 
 ## Data Architecture
 
 ```
+    S3 SOURCE FILES
+        │
+        ▼
 Raw Layer (Databricks)
   movielens.raw.*
         │
@@ -121,7 +96,6 @@ Seeds / Snapshots
   seed_movie_release_dates · snap_tags (SCD2)
 ```
 
----
 
 ## Models
 
@@ -165,7 +139,7 @@ Thin, renaming-only wrappers over raw Databricks source tables — no business l
 |---|---|---|
 | `snap_tags` | Timestamp (SCD Type 2) | Tracks historical changes to user tag applications using a `dbt_utils` surrogate key |
 
----
+
 
 ## Analyses
 
@@ -177,110 +151,5 @@ Thin, renaming-only wrappers over raw Databricks source tables — no business l
 - **Release trends over time** — movie count by release year
 - **Tag relevance analysis** — top 20 most relevant genome tags across all movies
 
----
 
-## Getting Started
 
-### Prerequisites
-
-- Python ≥ 3.12
-- Access to a Databricks workspace with the `movielens` catalog loaded
-- A Databricks personal access token
-
-### 1. Install dependencies
-
-```bash
-pip install "dbt-databricks>=1.11.6"
-```
-
-### 2. Configure your dbt profile
-
-Create `~/.dbt/profiles.yml` (or set `DBT_PROFILES_DIR` to the project folder):
-
-```yaml
-movielens_dbt:
-  target: dev
-  outputs:
-    dev:
-      type: databricks
-      host: <your-databricks-host>          # e.g. adb-xxxx.azuredatabricks.net
-      http_path: <your-sql-warehouse-path>  # e.g. /sql/1.0/warehouses/xxxx
-      token: <your-personal-access-token>
-      catalog: movielens
-      schema: dev
-      threads: 4
-```
-
-### 3. Install dbt packages
-
-```bash
-cd movielens_dbt
-dbt deps
-```
-
-### 4. Verify connection
-
-```bash
-dbt debug
-```
-
----
-
-## Running the Pipeline
-
-```bash
-# Load seed data (release dates)
-dbt seed
-
-# Run all models
-dbt run
-
-# Run a specific layer only
-dbt run --select staging
-dbt run --select dim
-dbt run --select fct
-
-# Run snapshots
-dbt snapshot
-
-# Run everything end-to-end
-dbt build
-```
-
----
-
-## Generating Documentation
-
-```bash
-# Generate the docs site
-dbt docs generate
-
-# Serve it locally (opens at http://localhost:8080)
-dbt docs serve
-```
-
-The generated site includes a full interactive DAG (lineage graph), model descriptions, column-level metadata, and test results — all sourced from [`schema.yml`](movielens_dbt/models/schema.yml).
-
----
-
-## Testing
-
-```bash
-# Run all data quality tests
-dbt test
-
-# Run tests for a specific model
-dbt test --select dim_movies
-```
-
-Tests defined in `schema.yml` include:
-- `not_null` — on all primary and foreign key columns
-- `relationships` — `fct_ratings.movie_id` → `dim_movies.movie_id`
-
----
-
-## Acknowledgements
-
-Dataset provided by [GroupLens Research](https://grouplens.org/) at the University of Minnesota.
-
-> F. Maxwell Harper and Joseph A. Konstan. 2015. *The MovieLens Datasets: History and Context.* ACM Transactions on Interactive Intelligent Systems (TiiS) 5, 4, Article 19. DOI: [10.1145/2827872](http://dx.doi.org/10.1145/2827872)
